@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Discographies</title>
+	<style>
+		#artist-name {
+			min-width: 250px;
+			width: 25%;
+		}
+	</style>
+</head>
+<body>
+	<h1>Welcome to our personal collection of discographies!</h1>
+	<button id="list-button">List our collected artists!</button>
+	<h2>Search our collection for an artist's discography!</h2>
+	<input type="text" id="artist-name" placeholder="Type the artist or band name here">
+	<button id="search-button">Find Artist's Discography!</button>
+
+	<script>
+		document.querySelector('#list-button').addEventListener('click', function(){
+			location.href = './list';
+		})
+		document.querySelector('#search-button').addEventListener('click', function(){
+			const artistName = document.querySelector("#artist-name").value;
+			location.href = `./search/${artistName}`;
+		})
+	</script>
+</body>
+</html>
