@@ -1,10 +1,11 @@
 const express = require('express')
 const path = require('path')
+const { disconnect } = require('process')
+const { threadId } = require('worker_threads')
 const app = express()
 const port = 3000
 
 const DISCOGRAPHIES = require('./discographies.json')
-
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'))
 })
@@ -14,8 +15,15 @@ app.get('/', (req, res) => {
 //         "req.params" object with an "artist" key-value pair)
 //
 //         NOTE: You may Google how to use route parameters with ExpressJS
-app.get('', (req, res) => {
+app.get('/search/:artist', (req, res) => {
 
+  // let keyObj = {banana : 0}
+  // console.log("apple" in keyObj);
+  if(req.params.artist in DISCOGRAPHIES){
+    res.json(DISCOGRAPHIES[req.params.artist])
+  }else{
+      res.sendStatus(204).end();
+  }
   // STEP 2: Check to see if the supplied "artist" name exists in the
   //         DISCOGRAPHIES object
   //
@@ -28,6 +36,14 @@ app.get('', (req, res) => {
 
   // STEP 4: If the artist doesn't exist, respond with a status code that lets the
   //         requester know the request went OK but there was no content to be found
+})
+app.get("/list/", (req, res) => {
+  let _list = [];
+  for (let newlist in DISCOGRAPHIES){
+      _list.push(newlist)
+  }
+  res.json(_list);
+
 })
 
 // STEP 5: Implement a new "list" route that responds with a JSON array containing
